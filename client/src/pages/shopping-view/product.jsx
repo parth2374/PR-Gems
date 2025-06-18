@@ -308,6 +308,24 @@ export default function ProductDetail() {
 >
   Video
 </a>
+								<a
+  href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.image)}&name=certificate.jpg`}
+  className="block px-4 py-2 hover:bg-gray-100 text-black"
+>
+  Certificate
+</a>
+								<a
+  href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.frontSide)}&name=front.jpg`}
+  className="block px-4 py-2 hover:bg-gray-100 text-black"
+>
+  Front Side
+</a>
+								<a
+  href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.backSide)}&name=back.jpg`}
+  className="block px-4 py-2 hover:bg-gray-100 text-black"
+>
+  Back Side
+</a>
 								{/* // )} */}
 								<p className="font-medium mt-2 archivo text-center">BASED ON 200+ GOOGLE REVIEWS</p>
 
