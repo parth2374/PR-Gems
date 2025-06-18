@@ -173,32 +173,32 @@ export default function ProductDetail() {
 	if (isLoading) return <div>Loading…</div>;
 	if (!productDetails) return <div>Product not found</div>;
 
-	
 
-const toggleDropdown = () => {
-  setShowDropdown(prev => !prev);
-};
 
-const closeDropdown = () => {
-  setShowDropdown(false);
-};
+	const toggleDropdown = () => {
+		setShowDropdown(prev => !prev);
+	};
+
+	const closeDropdown = () => {
+		setShowDropdown(false);
+	};
 
 	function handleGetProductDetails(getCurrentProductId) {
 		dispatch(fetchProductDetails(getCurrentProductId));
 		navigate(`/shop/product/${getCurrentProductId}`);
 	}
 
-	const getDownloadUrl = (url) => {
+		const getDownloadUrl = (url, fileName = "download") => {
   if (!url || typeof url !== "string") return null;
   const parts = url.split("/upload/");
   return parts.length === 2
-    ? `${parts[0]}/upload/fl_attachment/${parts[1]}`
+    ? `${parts[0]}/upload/fl_attachment:${fileName}/${parts[1]}`
     : url;
 };
 
-	const firstPreviewUrl = productDetails?.video
+	// 	const firstPreviewUrl = productDetails?.video
 
-	const downloadUrl = getDownloadUrl(firstPreviewUrl);
+	// 	const downloadUrl = getDownloadUrl(firstPreviewUrl);
 
 	return (
 		<section className="py-4 md:py-10 bg-white dark:bg-[#0b1727] text-zinc-900 dark:text-white relative overflow-hidden z-10">
@@ -255,53 +255,62 @@ const closeDropdown = () => {
 								<p className="text-2xl archivo text-center font-bold">Trusted by Leading Gemstone Buyers Worldwide</p>
 								<p className="text-2xl mt-2 text-center text-yellow-400">★★★★★</p>
 								{/* {downloadUrl && ( */}
-									<div className="absolute top-4 right-4 z-50">
-  <div className="relative">
-    <button
-      onClick={toggleDropdown}
-      className="bg-blue-600 text-white px-3 py-1 rounded shadow hover:bg-blue-700 transition"
-    >
-      Download
-    </button>
+								{/* <div className="absolute top-4 right-4 z-50">
+									<div className="relative">
+										<button
+											onClick={toggleDropdown}
+											className="bg-blue-600 text-white px-3 py-1 rounded shadow hover:bg-blue-700 transition"
+										>
+											Download
+										</button>
 
-    {showDropdown && (
-      <div className="absolute bg-white border rounded shadow mt-1 right-0 z-50">
-        <a
-          href={getDownloadUrl(productDetails?.image)}
-          download
-          onClick={closeDropdown}
-          className="block px-4 py-2 hover:bg-gray-100 text-black"
-        >
-          Certificate
-        </a>
-        <a
-          href={getDownloadUrl(productDetails?.video)}
-          download
-          onClick={closeDropdown}
-          className="block px-4 py-2 hover:bg-gray-100 text-black"
-        >
-          Video
-        </a>
-        <a
-          href={getDownloadUrl(productDetails?.frontSide)}
-          download
-          onClick={closeDropdown}
-          className="block px-4 py-2 hover:bg-gray-100 text-black"
-        >
-          Front Side
-        </a>
-        <a
-          href={getDownloadUrl(productDetails?.backSide)}
-          download
-          onClick={closeDropdown}
-          className="block px-4 py-2 hover:bg-gray-100 text-black"
-        >
-          Back Side
-        </a>
-      </div>
-    )}
-  </div>
-</div>
+										{showDropdown && (
+											<div className="absolute bg-white border rounded shadow mt-1 right-0 z-50">
+												<a
+													href={getDownloadUrl(productDetails?.image)}
+													download
+													onClick={closeDropdown}
+													className="block px-4 py-2 hover:bg-gray-100 text-black"
+												>
+													Certificate
+												</a>
+												<a
+													href={getDownloadUrl(productDetails?.video)}
+													download
+													onClick={closeDropdown}
+													className="block px-4 py-2 hover:bg-gray-100 text-black"
+												>
+													Video
+												</a>
+												<a
+													href={getDownloadUrl(productDetails?.frontSide)}
+													download
+													onClick={closeDropdown}
+													className="block px-4 py-2 hover:bg-gray-100 text-black"
+												>
+													Front Side
+												</a>
+												<a
+													href={getDownloadUrl(productDetails?.backSide)}
+													download
+													onClick={closeDropdown}
+													className="block px-4 py-2 hover:bg-gray-100 text-black"
+												>
+													Back Side
+												</a>
+											</div>
+										)}
+									</div>
+								</div> */}
+								<a
+  href={getDownloadUrl(productDetails?.video, "gemstone-video")}
+  download
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block px-4 py-2 hover:bg-gray-100 text-black"
+>
+  Video
+</a>
 								{/* // )} */}
 								<p className="font-medium mt-2 archivo text-center">BASED ON 200+ GOOGLE REVIEWS</p>
 
