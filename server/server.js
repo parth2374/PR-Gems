@@ -9,6 +9,7 @@ const authRouter = require("./routes/auth/auth-routes");
 const shopProductsRouter = require("./routes/shop/products-routes");
 const shopSearchRouter = require("./routes/shop/search-routes");
 const commonFeatureRouter = require("./routes/common/feature-routes");
+const downloadRoute = require("./routes/download");
 
 mongoose
   .connect(process.env.MONGO_URL)
@@ -42,5 +43,7 @@ app.use("/api/shop/products", shopProductsRouter);
 app.use("/api/shop/search", shopSearchRouter);
 
 app.use("/api/common/feature", commonFeatureRouter);
+
+app.use("/api", downloadRoute);
 
 app.listen(PORT, () => console.log(`Server is now running on port ${PORT}`));
