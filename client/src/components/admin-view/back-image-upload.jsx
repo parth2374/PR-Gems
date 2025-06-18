@@ -1,0 +1,127 @@
+import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { useEffect, useRef } from "react";
+import { Button } from "../ui/button";
+import axios from "axios";
+import { Skeleton } from "../ui/skeleton";
+import { useLocation } from "react-router-dom";
+
+function ProductBackSideImageUpload({
+	backSideFile,
+	setBackSideFile,
+	backSideLoadingState,
+	uploadedBackSideUrl,
+	setUploadedBackSideUrl,
+	setBackSideLoadingState,
+	isEditMode,
+	isCustomStyling = false,
+}) {
+
+	const location = useLocation();
+	const isDashboard = location.pathname === "/admin/dashboard";
+
+	const inputRef = useRef(null);
+
+	// console.log(isEditMode, "isEditMode");
+
+	function handleBackSideFileChange(event) {
+		console.log(event.target.files, "event.target.files");
+		const selectedFile = event.target.files?.[0];
+		console.log(selectedFile);
+
+		if (selectedFile) setBackSideFile(selectedFile);
+	}
+
+	function handleDragOver(event) {
+		event.preventDefault();
+	}
+
+	function handleDrop(event) {
+		event.preventDefault();
+		const droppedFile = event.dataTransfer.files?.[0];
+		if (droppedFile) setBackSideFile(droppedFile);
+	}
+
+	function handleRemoveBackSide() {
+		setBackSideFile(null);
+		if (inputRef.current) {
+			inputRef.current.value = "";
+		}
+	}
+
+	async function uploadBackSideToCloudinary() {
+		setBackSideLoadingState(true);
+		const data = new FormData();
+		data.append("my_back_image_file", backSideFile);
+		const response = await axios.post(
+			`${import.meta.env.VITE_API_URL}/api/admin/products/upload-back-image`,
+			data
+		);
+		console.log(response, "response");
+
+		if (response?.data?.success) {
+			setUploadedBackSideUrl(response.data.result.url);
+			setBackSideLoadingState(false);
+		}
+	}
+
+	useEffect(() => {
+		if (backSideFile !== null) uploadBackSideToCloudinary();
+	}, [backSideFile]);
+
+	return (
+		<div
+			className={`w-full pe-6 ps-6 mt-4 ${isCustomStyling ? "" : "max-w-md mx-auto"}`}
+		>
+			<Label className={`text-lg font-semibold mb-2 block ${isDashboard ? "cursive text-2xl" : ""}`}>Upload Back Side Image</Label>
+			<div
+				onDragOver={handleDragOver}
+				onDrop={handleDrop}
+				className={`${
+					isEditMode ? "opacity-60" : ""
+				} border-2 border-dashed rounded-lg p-4`}
+			>
+				<Input
+					id="back-image-upload"
+					type="file"
+					className="hidden"
+					ref={inputRef}
+					onChange={handleBackSideFileChange}
+					disabled={isEditMode}
+				/>
+				{!backSideFile ? (
+					<Label
+						htmlFor="back-image-upload"
+						className={`${
+							isEditMode ? "cursor-not-allowed" : ""
+						} flex flex-col items-center justify-center h-32 cursor-pointer`}
+					>
+						<UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
+						<span>Drag & drop or click to upload image</span>
+					</Label>
+				) : backSideLoadingState ? (
+					<Skeleton className="h-10 bg-gray-100" />
+				) : (
+					<div className="flex items-center justify-between">
+						<div className="flex items-center">
+							<FileIcon className="w-8 text-primary mr-2 h-8" />
+						</div>
+						<p className="text-sm font-medium">{backSideFile.name}</p>
+						<Button
+							variant="ghost"
+							size="icon"
+							className="text-muted-foreground hover:text-foreground"
+							onClick={handleRemoveBackSide}
+						>
+							<XIcon className="w-4 h-4 text-white" />
+							<span className="sr-only">Remove File</span>
+						</Button>
+					</div>
+				)}
+			</div>
+		</div>
+	);
+}
+
+export default ProductBackSideImageUpload;
