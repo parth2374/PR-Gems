@@ -303,10 +303,7 @@ export default function ProductDetail() {
 									</div>
 								</div> */}
 								<a
-  href={getDownloadUrl(productDetails?.video, "gemstone-video")}
-  download
-  target="_blank"
-  rel="noopener noreferrer"
+  href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.video)}&name=video.mp4`}
   className="block px-4 py-2 hover:bg-gray-100 text-black"
 >
   Video
