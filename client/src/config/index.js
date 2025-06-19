@@ -71,6 +71,7 @@ export const addProductFormElements = [
       { id: "gii", label: "GII" },
       { id: "gjepc", label: "GJEPC" },
       { id: "grs", label: "GRS" },
+      { id: "gfi", label: "GFI" },
       { id: "igitl", label: "IGITL" },
     ],
     placeholder: "Select certificate",
@@ -170,6 +171,7 @@ export const certificateOptionsMap = {
   gii: "GII",
   gjepc: "GJEPC",
   grs: "GRS",
+  gfi: "GFI",
   igitl: "IGITL"
 };
 
@@ -197,6 +199,7 @@ export const filterOptions = {
     { id: "gii", label: "GII" },
     { id: "gjepc", label: "GJEPC" },
     { id: "grs", label: "GRS" },
+    { id: "gfi", label: "GFI" },
     { id: "igitl", label: "IGITL" },
   ],
   shape: [
