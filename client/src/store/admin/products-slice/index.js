@@ -62,6 +62,17 @@ export const deleteProduct = createAsyncThunk(
   }
 );
 
+export const toggleProductListing = createAsyncThunk(
+  "/products/toggleListing",
+  async ({ id, isListed }) => {
+    const res = await axios.put(
+      `${import.meta.env.VITE_API_URL}/api/admin/products/toggle-listing/${id}`,
+      { isListed }
+    );
+    return res.data;
+  }
+);
+
 const AdminProductsSlice = createSlice({
   name: "adminProducts",
   initialState,
