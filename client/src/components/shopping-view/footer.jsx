@@ -23,7 +23,7 @@ export function Footer() {
     <footer className="relative w-full">
       <div className="mx-auto w-full max-w-7xl px-8">
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
-          <img data-aos="fade-left" data-aos-delay="1300" data-aos-once="false" src={Logo} alt="" className="w-50 h-34 hidden md:block lg:block" />
+          <img src={Logo} alt="" className="w-50 h-34 hidden md:block lg:block" />
           <div className="grid grid-cols-3 justify-between gap-4">
             {LINKS.map(({ title, items }) => (
               <ul key={title}>
