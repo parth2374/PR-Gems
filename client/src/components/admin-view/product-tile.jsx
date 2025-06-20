@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import './css/Product.css'
+import { useDispatch } from "react-redux";
+import { toggleProductListing, fetchAllProducts } from "@/store/admin/products-slice";
 
 function AdminProductTile({
   product,
@@ -10,48 +12,17 @@ function AdminProductTile({
   setCurrentEditedId,
   handleDelete
 }) {
+
+   const dispatch = useDispatch();
+ const handleToggle = () => {
+   dispatch(toggleProductListing({ id: product._id, isListed: !product.isListed }))
+     .then(() => dispatch(fetchAllProducts()));
+ };
+
 	useEffect(() => {
 		console.log(product, "productTile")
 	}, [])
   return (
-    // <Card className="w-full max-w-sm mx-auto">
-    //   <div>
-    //     <div className="relative">
-    //       <img
-    //         src={product?.image}
-    //         alt={product?.title}
-    //         className="w-full h-[300px] object-cover rounded-t-lg"
-    //       />
-    //     </div>
-    //     <CardContent>
-    //       <h2 className="text-xl font-bold mb-2 mt-2">{product?.title}</h2>
-    //       <div className="flex justify-between items-center mb-2">
-    //         <span
-    //           className={`${
-    //             product?.sku > 0 ? "line-through" : ""
-    //           } text-lg font-semibold text-primary`}
-    //         >
-    //           ${product?.sku}
-    //         </span>
-    //         {product?.sku > 0 ? (
-    //           <span className="text-lg font-bold">${product?.sku}</span>
-    //         ) : null}
-    //       </div>
-    //     </CardContent>
-    //     <CardFooter className="flex justify-between items-center">
-    //       <Button
-    //         onClick={() => {
-    //           setOpenCreateProductsDialog(true);
-    //           setCurrentEditedId(product?._id);
-    //           setFormData(product);
-    //         }}
-    //       >
-    //         Edit
-    //       </Button>
-          // <Button onClick={() => handleDelete(product?._id)}>Delete</Button>
-    //     </CardFooter>
-    //   </div>
-    // </Card>
     <div className="product">
   <span className="product__price text-center">Rs. {product?.price}</span>
   <img className="product__image" src={product?.image} alt="Image not available" />
@@ -68,6 +39,10 @@ function AdminProductTile({
     <p>•</p>
   <p className="dancing text-2xl">Weight: {product?.weight}</p>
   </div>
+
+  <Button onClick={handleToggle}>
+        {product.isListed ? "Pause" : "Resume"}
+     </Button>
   
   <button className="button-53 mb-3 mt-3" onClick={() => {
               setOpenCreateProductsDialog(true);
