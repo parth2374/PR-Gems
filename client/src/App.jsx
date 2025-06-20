@@ -21,17 +21,8 @@ import { checkAuth } from './store/auth-slice'
 import { Skeleton } from './components/ui/skeleton'
 import ProductDetail from './pages/shopping-view/product'
 import ShoppingSearch from './pages/shopping-view/search'
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 function App() {
-
-  useEffect(() => {
-    AOS.init({
-      duration: 1000, // Animation duration
-      once: true,    // Whether animation should happen only once - while scrolling down
-    });
-  }, []);
 
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
@@ -39,9 +30,9 @@ function App() {
 
   const dispatch = useDispatch();
 
-  /* useEffect(() => {
-    dispatch(checkAuth());
-  }, [dispatch]); */
+  // useEffect(() => {
+  //   dispatch(checkAuth());
+  // }, [dispatch]);
 
   // if (isLoading) return <Skeleton className="w-screen h-screen" />;
 
