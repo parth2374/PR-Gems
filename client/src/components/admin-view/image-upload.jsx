@@ -74,7 +74,7 @@ function ProductImageUpload({
     <div
       className={`w-full pe-6 ps-6 mt-4 ${isCustomStyling ? "" : "max-w-md mx-auto"}`}
     >
-      <Label className={`text-lg font-semibold mb-2 block ${isDashboard ? "cursive text-2xl" : ""}`}>Upload Image</Label>
+      <Label className={`text-lg font-semibold mb-2 block ${isDashboard ? "cursive text-2xl" : ""}`}>Upload Certificate</Label>
       <div
         onDragOver={handleDragOver}
         onDrop={handleDrop}
