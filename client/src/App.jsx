@@ -39,9 +39,9 @@ function App() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  /* useEffect(() => {
     dispatch(checkAuth());
-  }, [dispatch]);
+  }, [dispatch]); */
 
   if (isLoading) return <Skeleton className="w-screen h-screen" />;
 
