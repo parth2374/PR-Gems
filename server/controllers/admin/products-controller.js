@@ -216,6 +216,23 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+// at bottom, alongside deleteProduct
+const toggleProductListing = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { isListed } = req.body;
+    const updated = await Product.findByIdAndUpdate(
+      id,
+      { isListed },
+      { new: true }
+    );
+    res.status(200).json({ success: true, data: updated });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ success: false, message: "Error toggling listing" });
+  }
+};
+
 module.exports = {
   handleImageUpload,
   handleVideoUpload,
@@ -224,5 +241,6 @@ module.exports = {
   editProduct,
   deleteProduct,
   handleFrontSideImageUpload,
-  handleBackSideImageUpload
+  handleBackSideImageUpload,
+  toggleProductListing
 };
