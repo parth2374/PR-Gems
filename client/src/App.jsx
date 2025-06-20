@@ -43,7 +43,7 @@ function App() {
     dispatch(checkAuth());
   }, [dispatch]); */
 
-  if (isLoading) return <Skeleton className="w-screen h-screen" />;
+  // if (isLoading) return <Skeleton className="w-screen h-screen" />;
 
   return (
     <div className='flex flex-col overflow-hidden bg-white overflow-x-hidden'>
