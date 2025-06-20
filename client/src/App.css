@@ -1,0 +1,7 @@
+.scrollable {
+  -webkit-overflow-scrolling: touch;
+}
+
+.glitchy-div {
+  transform: translateZ(0);
+}
