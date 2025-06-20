@@ -270,7 +270,7 @@ function ShoppingHeader() {
             </div>
           </div>
         </div>
-        <Link to={'/shop/home'}><img data-aos="fade-right" src={Logo} alt="logo" className="cursor-pointer w-29 h-19 md:w-40 md:h-25 lg:w-40 lg:h-25" srcset="" /></Link>
+        <Link to={'/shop/home'}><img src={Logo} alt="logo" className="cursor-pointer w-29 h-19 md:w-40 md:h-25 lg:w-40 lg:h-25" srcset="" /></Link>
         <div className="flex sm:space-x-3 md:space-x-8 lg:space-x-8">
           {/* Search */}
           <Link to={'/shop/search'}>
