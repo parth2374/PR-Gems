@@ -394,7 +394,7 @@ function ShoppingHome() {
               Featured Shapes
             </h2>
           </div>
-          <div data-aos="fade-up" data-aos-once="true" data-aos-delay="1300"
+          <div
             className="
        flex flex-row flex-nowrap justify-evenly
         gap-0 md:gap-1 lg:gap-1 xl:gap-1 mt-4 md:mt-6
@@ -434,7 +434,7 @@ function ShoppingHome() {
    <hr className="w-1/5 border-t border-gray-300 dark:border-gray-600" />
 </div>
 
-          <div data-aos="fade-up-right" data-aos-delay="1300" data-aos-once="true" /* className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"*/>
+          <div /* className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"*/>
             {/* {brandsWithIcon.map((brandItem) => (
               <Card
                 onClick={() => handleNavigateToListingPage(brandItem, "brand")}
@@ -464,7 +464,7 @@ function ShoppingHome() {
   <h1 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">Popular <mark class="px-2 text-white bg-blue-600 rounded-sm dark:bg-blue-500">Products</mark></h1>
    <hr className="hidden md:block lg:block w-1/5 border-t border-gray-300 dark:border-gray-600" />
 </div>
-          <div data-aos="fade-up-left" data-aos-delay="1300" data-aos-once="true" /* className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"*/>
+          <div /* className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"*/>
             {/* {productList && productList.length > 0
               ? productList.map((productItem) => (
                 <ShoppingProductTile
