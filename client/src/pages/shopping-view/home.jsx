@@ -50,32 +50,35 @@ import ImageFooter from "@/components/shopping-view/imageFooter";
 // ];
 const categories = [
   {
-    img: "https://cdn.easyfrontend.com/pictures/ecommerce/product25.jpg",
+    img: "https://cdn.shopaccino.com/jewellery/filter-images/cushion-1636427710_s.png",
     title: "Cushion",
-    id: 'cushion'
+    id: 'cushion',
+    color: '#fff'
   },
   {
-    img: "https://cdn.easyfrontend.com/pictures/ecommerce/product26.jpg",
+    img: "https://cdn.shopaccino.com/jewellery/filter-images/oval-737270791_s.png",
     title: "Oval",
-    id: 'oval'
+    id: 'oval',
+    color: '#FEEFEA'
   },
   {
-    img: "https://cdn.easyfrontend.com/pictures/ecommerce/product35.jpg",
+    img: "https://cdn.shopaccino.com/jewellery/filter-images/heart-1679245788_s.png",
     title: "Heart",
     id: 'heart'
   },
   {
-    img: "https://cdn.easyfrontend.com/pictures/ecommerce/product28.jpg",
+    img: "https://cdn.shopaccino.com/jewellery/filter-images/octagon-606017921_s.png",
     title: "Octagon",
-    id: 'octagon'
+    id: 'octagon',
+    color: '#DEF3FF'
   },
   {
-    img: "https://cdn.easyfrontend.com/pictures/ecommerce/product29.jpg",
+    img: "https://cdn.shopaccino.com/jewellery/filter-images/pear-86036560_s.png",
     title: "Pear",
     id: 'pear'
   },
   {
-    img: "https://cdn.easyfrontend.com/pictures/ecommerce/product29.jpg",
+    img: "https://cdn.shopaccino.com/jewellery/filter-images/round-1688914715_s.png",
     title: "Round",
     id: 'round'
   }
@@ -106,19 +109,19 @@ const CategoryItem = ({ product }) => {
 					/>
 				</div> */}
         <div
-          className="
+          className={`
     w-24 h-24
     md:w-28 md:h-28
     lg:w-34 lg:h-34
     flex justify-center items-center 
-    shadow-none hover:shadow-lg shadow-gray-500
+    shadow-none hover:shadow-md bg-[${product.color}] shadow-gray-500
     rounded-full 
 
     transform
     transition-transform
     duration-300
     hover:-translate-y-1
-  "
+  `}
           onClick={() =>
             handleNavigateToListingPage(product, "shape")
           }
@@ -181,36 +184,6 @@ function ShoppingHome() {
     dispatch(fetchProductDetails(getCurrentProductId));
     navigate(`/shop/product/${getCurrentProductId}`);
   }
-
-  // function handleAddtoCart(getCurrentProductId) {
-  //   dispatch(
-  //     addToCart({
-  //       userId: user?.id,
-  //       productId: getCurrentProductId,
-  //       quantity: 1,
-  //     })
-  //   ).then((data) => {
-  //     if (data?.payload?.success) {
-  //       dispatch(fetchCartItems(user?.id));
-  //       toast({
-  //         title: "Product is added to cart",
-  //       });
-  //     }
-  //   });
-  // }
-
-  // useEffect(() => {
-  //   if (productDetails !== null) setOpenDetailsDialog(true);
-  // }, [productDetails]);
-
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImageList.length);
-  //   }, 5000);
-
-  //   return () => clearInterval(timer);
-  // }, [featureImageList]);
-  // Auto-advance slides every 5s
   useEffect(() => {
     if (!slideCount) return;
     clearTimeout(timeoutRef.current);
@@ -418,7 +391,7 @@ function ShoppingHome() {
         <div className="container mx-auto">
           <div className="flex justify-start items-center text-center md:text-start">
             <h2 className="leading-none text-xl md:text-[25px] font-bold mb-2 ml-3 oswald">
-              Featured Certificates
+              Featured Shapes
             </h2>
           </div>
           <div
