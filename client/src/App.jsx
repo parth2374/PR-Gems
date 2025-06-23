@@ -37,7 +37,7 @@ function App() {
   // if (isLoading) return <Skeleton className="w-screen h-screen" />;
 
   return (
-    <div className='scrollable glitchy-div flex flex-col overflow-hidden bg-white overflow-x-hidden'>
+    <div className='scrollable glitchy-div flex flex-col /* overflow-hidden */ bg-white overflow-x-hidden'>
       <Routes>
         <Route
           path="/auth"
