@@ -137,11 +137,28 @@ function AdminProducts() {
     });
   }
 
-	function isFormValid() {
-    return Object.keys(formData)
-      // .filter((currentKey) => currentKey !== "averageReview")
-      .map((key) => formData[key] !== "")
-      .every((item) => item);
+	// function isFormValid() {
+  //   return Object.keys(formData)
+  //     // .filter((currentKey) => currentKey !== "averageReview")
+  //     .map((key) => formData[key] !== "")
+  //     .every((item) => item);
+  // }
+  function isFormValid() {
+    // only these fields are “required”
+    const required = [
+      "title",
+      "origin",
+      "certificate",
+      "price",
+      "weight",
+      "sku",
+      "shape",
+    ];
+    return required.every((key) => {
+      const val = formData[key];
+      // make sure it's not null/undefined/empty-string
+      return val !== null && val !== undefined && String(val).trim() !== "";
+    });
   }
 
 	console.log(formData, "formData")
