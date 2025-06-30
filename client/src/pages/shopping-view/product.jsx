@@ -15,8 +15,10 @@ const ProductPreviews = ({ previews }) => {
 			return previews;
 		}
 		return [
-			{ type: 'image', src: previews.image },
-			{ type: 'video', src: previews.video, thumbnail: previews.thumbnail || previews.image }
+			{ type: 'image', src: previews.frontSide },
+			{ type: 'image', src: previews.backSide },
+			{ type: 'video', src: previews.video, thumbnail: previews.thumbnail || previews.image },
+			{ type: 'image', src: previews.image }
 		];
 	}, [previews]);
 
