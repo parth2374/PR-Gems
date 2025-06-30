@@ -25,7 +25,7 @@ function AdminProductTile({
   return (
     <div className="product">
   <span className="product__price text-center">Rs. {product?.price}</span>
-  <img className="product__image" src={product?.image} alt="Image not available" />
+  <img className="product__image" src={product?.frontSide} alt="Image not available" />
   <h1 className="product__title whitespace-nowrap overflow-hidden truncate max-w-xs font-serif">{product?.title}</h1>
   <hr />
   <div className="flex gap-2 h-min">
