@@ -90,7 +90,7 @@ function ShoppingProductTile({
     // </Card>
     <div className="productWrapper">
       <div className="productContainer">
-        <div className="top" onClick={() => handleGetProductDetails(product?._id)} style={{ backgroundImage: `url(${product?.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+        <div className="top" onClick={() => handleGetProductDetails(product?._id)} style={{ backgroundImage: `url(${product?.frontSide})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
         <div className={`bottom ${isClicked ? 'clicked' : ''}`}>
           <div className="left">
             <div className="details">
