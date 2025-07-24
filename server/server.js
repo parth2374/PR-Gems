@@ -11,6 +11,8 @@ const shopSearchRouter = require("./routes/shop/search-routes");
 const commonFeatureRouter = require("./routes/common/feature-routes");
 const downloadRoute = require("./routes/download");
 
+const compression = require("compression");
+
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB connected"))
@@ -19,12 +21,16 @@ mongoose
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.use(compression());
+app.disable('etag');
+
 // Define allowed origins for CORS
 const allowedOrigins = [
   'http://localhost:5173',
   'https://prgems.onrender.com',
   'https://www.prgems.in'
 ];
+
 
 app.use(
   cors({
