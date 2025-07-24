@@ -50,13 +50,13 @@ const getFilteredProducts = async (req, res) => {
         sort.price = -1;
 
         break;
-      case "title-atoz":
-        sort.title = 1;
+      case "weight-lowtohigh":
+        sort.weight = 1;
 
         break;
 
-      case "title-ztoa":
-        sort.title = -1;
+      case "weight-hightolow":
+        sort.weight = -1;
 
         break;
 

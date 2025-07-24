@@ -41,7 +41,7 @@ function ProductFilter({ filters, handleFilter, handleRangeFilter}) {
             <div>
               <h3 className="text-base font-bold">{keyItem}</h3>
               <div className="grid gap-2 mt-2">
-                {filterOptions[keyItem].map((option) => (
+                {/* {filterOptions[keyItem].map((option) => (
                   <Label className="flex font-medium items-center gap-2 ">
                     <Checkbox
                     className={`flex`}
@@ -55,14 +55,52 @@ function ProductFilter({ filters, handleFilter, handleRangeFilter}) {
                     />
                     {option.label}
                   </Label>
-                ))}
+                ))} */}
+                {filterOptions[keyItem].map((option) => {
+                  // Determine if all non-"all" options are selected
+                  const allIds = filterOptions[keyItem].map(o => o.id).filter(id => id !== "all");
+                  const selectedIds = filters[keyItem] || [];
+                  const allSelected = allIds.every(id => selectedIds.includes(id));
+
+                  // Compute checked state for this option
+                  const checked = option.id === "all"
+                    ? allSelected
+                    : selectedIds.includes(option.id);
+
+                  // Handler that toggles either all or a single option
+                      const onChange = () => {
+      if (option.id === "all") {
+        if (allSelected) {
+          // If everything is currently selected, clear all
+          handleFilter(keyItem, [], true);
+        } else {
+          // Otherwise, select every option
+          handleFilter(keyItem, allIds);
+        }
+      } else {
+        // Toggle a single option
+        handleFilter(keyItem, option.id);
+      }
+    };
+
+                  return (
+                    <Label key={option.id} className="flex font-medium items-center gap-2">
+                      <Checkbox
+                        className="flex"
+                        checked={checked}
+                        onCheckedChange={onChange}
+                      />
+                      {option.label}
+                    </Label>
+                  );
+                })}
               </div>
             </div>
             <Separator />
           </Fragment>
         ))}
       </div>
-      <h3 className="text-base ps-4 pe-4 pb-3 font-bold">Price Range</h3>
+      <h3 className="text-base ps-4 pe-4 pb-3 font-bold">Price Range <span className="font-medium text-sm">(Per Carat)</span></h3>
       <div className="flex flex-col ps-4 pe-4 gap-2">
         <div className="flex gap-2">
           <Label>Min:</Label>

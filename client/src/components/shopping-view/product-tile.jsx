@@ -95,7 +95,7 @@ function ShoppingProductTile({
           <div className="left">
             <div className="details">
               <h1 className="whitespace-nowrap overflow-hidden text-ellipsis archivo font-bold text-xl w-[12rem]">{product?.title}</h1>
-              <p>SKU: {product?.sku}</p>
+              <p>Weight: {product?.weight}</p>
               <p className="whitespace-nowrap overflow-hidden text-ellipsis">Origin: {originOptionsMap[product?.origin]}</p>
               <div className="flex justify-center items-center">
                 <button className="button-30 mt-3" role="button">Contact<div className="block md:hidden lg:block ml-2"> Us For Price</div></button>

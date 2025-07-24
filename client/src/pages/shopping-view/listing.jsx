@@ -12,6 +12,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+// import Lottie from "lottie-react";
+// import loadingAnim from './../../assets/Loading sand clock.lottie'
 import { sortOptions } from "@/config";
 // import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import {
@@ -65,6 +67,28 @@ function ShoppingListing() {
     (state) => state.shopProducts
   );
 
+  // const [percent, setPercent] = useState(0);
+  // const [showLoader, setShowLoader] = useState(false);
+
+  // // Kick off live percent when loading starts
+  // useEffect(() => {
+  //   if (!isLoading) return;
+  //   setShowLoader(true);
+  //   setPercent(0);
+  //   const id = setInterval(() => {
+  //     setPercent(p => Math.min(90, p + Math.random()*10));
+  //   }, 200);
+  //   return () => clearInterval(id);
+  // }, [isLoading]);
+
+  // // Finish loader when loading ends
+  // useEffect(() => {
+  //   if (isLoading) return;
+  //   setPercent(100);
+  //   const t = setTimeout(() => setShowLoader(false), 300);
+  //   return () => clearTimeout(t);
+  // }, [isLoading]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 10;
 
@@ -108,26 +132,50 @@ function ShoppingListing() {
     setSort(value);
   }
 
-  function handleFilter(getSectionId, getCurrentOption) {
-    let cpyFilters = { ...filters };
-    const indexOfCurrentSection = Object.keys(cpyFilters).indexOf(getSectionId);
+  // function handleFilter(getSectionId, getCurrentOption) {
+  //   let cpyFilters = { ...filters };
+  //   const indexOfCurrentSection = Object.keys(cpyFilters).indexOf(getSectionId);
 
-    if (indexOfCurrentSection === -1) {
-      cpyFilters = {
-        ...cpyFilters,
-        [getSectionId]: [getCurrentOption],
-      };
+  //   if (indexOfCurrentSection === -1) {
+  //     cpyFilters = {
+  //       ...cpyFilters,
+  //       [getSectionId]: [getCurrentOption],
+  //     };
+  //   } else {
+  //     const indexOfCurrentOption = cpyFilters[getSectionId].indexOf(getCurrentOption);
+
+  //     if (indexOfCurrentOption === -1)
+  //       cpyFilters[getSectionId].push(getCurrentOption);
+  //     else cpyFilters[getSectionId].splice(indexOfCurrentOption, 1);
+  //   }
+
+  //   setFilters(cpyFilters);
+  //   sessionStorage.setItem("filters", JSON.stringify(cpyFilters));
+  // }
+  function handleFilter(category, ids, clearAll = false) {
+  setFilters((prev) => {
+    const nextFilters = { ...prev };
+
+    let newSet;
+    if (Array.isArray(ids)) {
+      // If we get an array, *always* select exactly those IDs
+      newSet = new Set(ids);
     } else {
-      const indexOfCurrentOption = cpyFilters[getSectionId].indexOf(getCurrentOption);
-
-      if (indexOfCurrentOption === -1)
-        cpyFilters[getSectionId].push(getCurrentOption);
-      else cpyFilters[getSectionId].splice(indexOfCurrentOption, 1);
+      // Single ID toggle or clearAll
+      newSet = new Set(nextFilters[category] || []);
+      if (clearAll) {
+        newSet.clear();
+      } else {
+        if (newSet.has(ids)) newSet.delete(ids);
+        else newSet.add(ids);
+      }
     }
 
-    setFilters(cpyFilters);
-    sessionStorage.setItem("filters", JSON.stringify(cpyFilters));
-  }
+    nextFilters[category] = Array.from(newSet);
+    sessionStorage.setItem("filters", JSON.stringify(nextFilters));
+    return nextFilters;
+  });
+}
 
   function handleGetProductDetails(getCurrentProductId) {
     console.log(getCurrentProductId);
@@ -371,6 +419,16 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+              {/* {isLoading && showLoader ? (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 z-10">
+                  <div className="w-24 h-24">
+                    <Lottie animationData={loadingAnim} loop />
+                  </div>
+                  <div className="mt-2 text-lg font-medium">
+                    {Math.floor(percent)}% loaded
+                  </div>
+                </div>
+              ) : null} */}
               {productList && productList.length > 0
                 ? productList.map((productItem) => (
                     <ShoppingProductTile

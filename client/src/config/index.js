@@ -186,6 +186,7 @@ export const shapeOptionsMap = {
 
 export const filterOptions = {
   origin: [
+    { id: "all",    label: "All origins" },
     { id: "africa", label: "Africa" },
     { id: "burma", label: "Burma" },
     { id: "madagascar", label: "Madagascar" },
@@ -195,6 +196,7 @@ export const filterOptions = {
     { id: "tanzania", label: "Tanzania" },
   ],
   certificate: [
+    { id: "all",    label: "All certificates" },
     { id: "gia", label: "GIA" },
     { id: "gii", label: "GII" },
     { id: "gjepc", label: "GJEPC" },
@@ -203,6 +205,7 @@ export const filterOptions = {
     { id: "igitl", label: "IGITL" },
   ],
   shape: [
+    { id: "all",     label: "All shapes" },
     { id: "cushion", label: "Cushion" },
     { id: "heart", label: "Heart" },
     { id: "octagon", label: "Octagon" },
@@ -215,6 +218,6 @@ export const filterOptions = {
 export const sortOptions = [
   { id: "price-lowtohigh", label: "Price: Low to High" },
   { id: "price-hightolow", label: "Price: High to Low" },
-  { id: "title-atoz", label: "Title: A to Z" },
-  { id: "title-ztoa", label: "Title: Z to A" },
+  { id: "weight-lowtohigh", label: "Weight: Low to High" },
+  { id: "weight-hightolow", label: "Weight: High to Low" },
 ];
