@@ -2,7 +2,11 @@ const Product = require("../../models/Product");
 
 const getFilteredProducts = async (req, res) => {
   try {
-    const { origin = [], certificate = [], shape = [], minPrice, maxPrice, minWeight, maxWeight, minSku, maxSku, sortBy = "price-lowtohigh" } = req.query;
+    const page  = Math.max(1, parseInt(req.query.page, 10)  || 1);
+    const limit = Math.max(1, parseInt(req.query.limit,10) || 16);
+    const skip  = (page - 1) * limit;
+    // const { origin = [], certificate = [], shape = [], minPrice, maxPrice, minWeight, maxWeight, minSku, maxSku, sortBy = "price-lowtohigh" } = req.query;
+    const { origin = "", certificate = "", shape = "", minPrice, maxPrice, minWeight, maxWeight, minSku, maxSku, sortBy = "price-lowtohigh" } = req.query;
 
     let filters = {};
 
@@ -62,11 +66,30 @@ const getFilteredProducts = async (req, res) => {
     }
 
     // const products = await Product.find(filters).sort(sort);
-    const products = await Product.find({ ...filters, isListed: true }).sort(sort);
+    // const products = await Product.find({ ...filters, isListed: true }).sort(sort);
 
+     // ← Run paginated query + count total
+   const [ products, total ] = await Promise.all([
+     Product.find({ ...filters, isListed: true })
+       .sort(sort)
+       .skip(skip)
+       .limit(limit),
+     Product.countDocuments({ ...filters, isListed: true })
+   ]);
+
+    // res.status(200).json({
+    //   success: true,
+    //   data: products,
+    // });
     res.status(200).json({
       success: true,
       data: products,
+      pagination: {
+        total,
+        page,
+        pages: Math.ceil(total / limit),
+        limit
+      }
     });
   } catch (error) {
     console.log(error);

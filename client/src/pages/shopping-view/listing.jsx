@@ -61,9 +61,12 @@ function createSearchParamsHelper(filterParams) {
 
 function ShoppingListing() {
   const dispatch = useDispatch();
-  const { productList, productDetails } = useSelector(
+  const { productList, productDetails, pagination, isLoading } = useSelector(
     (state) => state.shopProducts
   );
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 10;
 
   const CACHE_DURATION = 1000 * 60 * 60 * 6;
 
@@ -189,16 +192,27 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
   //       fetchAllFilteredProducts({ filterParams: filters, sortParams: sort })
   //     );
   // }, [dispatch, sort, filters]);
+//   useEffect(() => {
+//   if (memoizedFilters && memoizedSort) {
+//     dispatch(
+//       fetchAllFilteredProducts({
+//         filterParams: memoizedFilters,
+//         sortParams: memoizedSort,
+//       })
+//     );
+//   }
+// }, [dispatch, memoizedFilters, memoizedSort]);
+  // whenever filters, sort or page changes, fetch that page
   useEffect(() => {
-  if (memoizedFilters && memoizedSort) {
-    dispatch(
-      fetchAllFilteredProducts({
+    if (memoizedFilters && memoizedSort) {
+      dispatch(fetchAllFilteredProducts({
         filterParams: memoizedFilters,
         sortParams: memoizedSort,
-      })
-    );
-  }
-}, [dispatch, memoizedFilters, memoizedSort]);
+        page: currentPage,
+        limit: ITEMS_PER_PAGE,
+      }));
+    }
+  }, [dispatch, memoizedFilters, memoizedSort, currentPage]);
 
   // And your effect to sync query‐string:
   useEffect(() => {
@@ -369,6 +383,29 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
             </div>
           </div>
         </div>
+
+        {/* pagination controls */}
+      {pagination && !isLoading && (
+        <div className="flex justify-center items-center gap-4 mt-6">
+          <button
+            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50"
+          >
+            Prev
+          </button>
+
+          <span>Page {currentPage} of {pagination.pages}</span>
+
+          <button
+            onClick={() => setCurrentPage(p => Math.min(pagination.pages, p + 1))}
+            disabled={currentPage === pagination.pages}
+            className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
       </div>
 
       <Newsletter />

@@ -50,7 +50,7 @@ function App() {
           <Route path="login" element={<AuthLogin />} />
           {/* <Route path="register" element={<AuthRegister />} /> */}
         </Route>
-        <Route path='/' element={<Navigate to='/shop/home' replace />} />
+        <Route path='/' element={<Navigate to='/shop/listing' replace />} />
         <Route path='/admin'
           element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>

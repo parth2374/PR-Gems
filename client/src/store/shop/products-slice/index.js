@@ -5,14 +5,28 @@ const initialState = {
   isLoading: false,
   productList: [],
   productDetails: null,
+  pagination: {
+    total: 0,
+    page: 1,
+    pages: 1,
+    limit: 16,
+  },
 };
 
 // at top of slice
 const capitalize = s => s.charAt(0).toUpperCase() + s.slice(1);
 
-export const fetchAllFilteredProducts = createAsyncThunk(
-  "/products/fetchAllProducts",
-  async ({ filterParams, sortParams }) => {
+// export const fetchAllFilteredProducts = createAsyncThunk(
+  // "/products/fetchAllProducts",
+  // async ({ filterParams, sortParams }) => {
+    export const fetchAllFilteredProducts = createAsyncThunk(
+  "shoppingProducts/fetchAllFilteredProducts",
+  async ({
+    filterParams,
+    sortParams,
+    page = 1,
+    limit = 16,
+  }) => {
     console.log(fetchAllFilteredProducts, "fetchAllFilteredProducts");
 
     console.log(filterParams, "FilterParamsAaja")
@@ -32,6 +46,8 @@ export const fetchAllFilteredProducts = createAsyncThunk(
       }
     });
     params.set("sortBy", sortParams);
+    params.set("page",  String(page));
+    params.set("limit", String(limit));
 
     const result = await axios.get(
       `${import.meta.env.VITE_API_URL}/api/shop/products/get?${params}`
@@ -70,6 +86,7 @@ const shoppingProductSlice = createSlice({
       .addCase(fetchAllFilteredProducts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.productList = action.payload.data;
+         state.pagination  = action.payload.pagination;
       })
       .addCase(fetchAllFilteredProducts.rejected, (state, action) => {
         state.isLoading = false;
