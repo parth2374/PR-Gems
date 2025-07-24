@@ -21,6 +21,7 @@ const PORT = process.env.PORT || 5000;
 
 // Define allowed origins for CORS
 const allowedOrigins = [
+  'http://localhost:5173',
   'https://prgems.onrender.com',
   'https://www.prgems.in'
 ];
