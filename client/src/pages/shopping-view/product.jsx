@@ -272,7 +272,7 @@ export default function ProductDetail() {
 												className="flex items-center px-4 py-3 hover:bg-purple-100 transition rounded-t-lg"
 												onClick={closeDropdown}
 											>
-												<p className="text-center w-full">🎥 Download Video</p>
+												<p className="text-center w-full">🎥 Video</p>
 											</a>
 										</li>
 										<li>
@@ -281,7 +281,7 @@ export default function ProductDetail() {
 												className="flex items-center px-4 py-3 hover:bg-purple-100 transition"
 												onClick={closeDropdown}
 											>
-												<p className="text-center w-full">📄 Download Certificate</p>
+												<p className="text-center w-full">📄 Certificate</p>
 											</a>
 										</li>
 										<li>

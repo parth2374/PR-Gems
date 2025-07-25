@@ -56,36 +56,29 @@ function MenuItems({ onClose }) {
   return (
     <nav className="flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row">
       {shoppingViewHeaderMenuItems.map((menuItem) => (
-        // <Label
-        //   onClick={() => handleNavigate(menuItem)}
-        //   className="text-md font-medium cursor-pointer shop-heading-font"
-        //   key={menuItem.id}
-        // >
-        //   {menuItem.label}
-        // </Label>
         <Label
           onClick={() => handleNavigate(menuItem)}
           key={menuItem.id}
           className="
-    relative
-    inline-block
-    cursor-pointer
-    shop-heading-font
-    font-medium
-    text-md
+            relative
+            inline-block
+            cursor-pointer
+            shop-heading-font
+            font-medium
+            text-md
 
-    after:content-['']
-    after:absolute
-    after:left-0
-    after:bottom-0
-    after:h-0.5
-    after:bg-current
-    after:w-0
-    after:transition-all
-    after:duration-300
-    
-    hover:after:w-full
-  "
+            after:content-['']
+            after:absolute
+            after:left-0
+            after:bottom-0
+            after:h-0.5
+            after:bg-current
+            after:w-0
+            after:transition-all
+            after:duration-300
+            
+            hover:after:w-full
+          "
         >
           {menuItem.label}
         </Label>
@@ -97,7 +90,6 @@ function MenuItems({ onClose }) {
 
 function ShoppingHeader() {
 
-  // const { isAuthenticated } = useSelector((state) => state.auth);
   const [open, setOpen] = useState(false);
 
   console.log(open, "open")
@@ -122,26 +114,26 @@ function ShoppingHeader() {
             </Sheet>
 
             <div className="hidden md:flex lg:flex gap-3">
-              <Headset className="w-7 h-7" />
+              {/* <Headset className="w-7 h-7" />
               <div className="leading-tight">
                 <p className="text-[#35AC75] font-bold">+91 99838 86963</p>
                 <p className="text-sm text-gray-500 hidden md:block lg:block xl:block">Contact Us</p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
-        <Link to={'/shop/home'}><img src={Logo} alt="logo" className="cursor-pointer w-29 h-19 md:w-40 md:h-25 lg:w-40 lg:h-25" srcset="" /></Link>
+        <Link to={'/shop/home'}>
+          {/* <img src={Logo} alt="logo" className="cursor-pointer w-29 h-19 md:w-40 md:h-25 lg:w-40 lg:h-25" srcset="" /> */}
+          <h1></h1>
+        </Link>
         <div className="flex sm:space-x-3 md:space-x-8 lg:space-x-8">
           {/* Search */}
           <Link to={'/shop/search'}>
             <button
               className="
-            flex flex-col items-center
-            p-3 rounded-lg
-            transition
-            hover:bg-gray-100
-            focus:outline-none focus:ring-2 focus:ring-green-300
-          "
+                flex flex-col items-center
+                p-3 rounded-lg
+              "
             >
               <Search className="w-7 h-7 text-[#35AC75] transition-transform group-hover:scale-110" />
               <span className="mt-1 text-sm font-medium text-gray-700">Search</span>
@@ -152,9 +144,6 @@ function ShoppingHeader() {
               className="
             flex flex-col items-center
             p-3 rounded-lg
-            transition
-            hover:bg-gray-100
-            focus:outline-none focus:ring-2 focus:ring-green-300
           "
             >
               <Gem className="w-7 h-7 text-[#35AC75] transition-transform group-hover:scale-110" />
