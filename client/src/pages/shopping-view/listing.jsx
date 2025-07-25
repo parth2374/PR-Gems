@@ -436,10 +436,10 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
               {isLoading ? (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 z-10">
-                  <div className="w-24 h-24">
+                  <div className="w-24 h-24 bg-white">
                     <Lottie animationData={loadingAnim} loop />
                   </div>
-                  <div className="mt-2 text-lg font-medium">Loading products...</div>
+                  <div className="mt-2 text-lg font-medium bg-white">Loading products...</div>
                 </div>
               ) : null}
               {productList && productList.length > 0
