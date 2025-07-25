@@ -12,8 +12,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// import Lottie from "lottie-react";
-// import loadingAnim from './../../assets/Loading sand clock.lottie'
+import Lottie from "lottie-react";
+import loadingAnim from './../../assets/Loading sand clock.json'
 import { sortOptions } from "@/config";
 // import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import {
@@ -419,16 +419,14 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-              {/* {isLoading && showLoader ? (
+              {isLoading ? (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 z-10">
                   <div className="w-24 h-24">
                     <Lottie animationData={loadingAnim} loop />
                   </div>
-                  <div className="mt-2 text-lg font-medium">
-                    {Math.floor(percent)}% loaded
-                  </div>
+                  <div className="mt-2 text-lg font-medium">Loading products...</div>
                 </div>
-              ) : null} */}
+              ) : null}
               {productList && productList.length > 0
                 ? productList.map((productItem) => (
                     <ShoppingProductTile

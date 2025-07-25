@@ -12,8 +12,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// import Lottie from "lottie-react";
-// import loadingAnim from './../../assets/Loading sand clock.lottie'
+import Lottie from "lottie-react";
+import loadingAnim from "@/assets/Loading sand clock.lottie";
 import { sortOptions } from "@/config";
 // import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import {
@@ -21,7 +21,7 @@ import {
   fetchProductDetails,
 } from "@/store/shop/products-slice";
 import { ArrowUpDownIcon } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -419,25 +419,22 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-              {/* {isLoading && showLoader ? (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 z-10">
+              {isLoading ? (
+                <div className="flex flex-col items-center justify-center w-full py-20">
                   <div className="w-24 h-24">
                     <Lottie animationData={loadingAnim} loop />
                   </div>
-                  <div className="mt-2 text-lg font-medium">
-                    {Math.floor(percent)}% loaded
-                  </div>
+                  <div className="mt-2 text-lg font-medium">Loading products</div>
                 </div>
-              ) : null} */}
-              {productList && productList.length > 0
-                ? productList.map((productItem) => (
-                    <ShoppingProductTile
-                      key={productItem.id}
-                      handleGetProductDetails={handleGetProductDetails}
-                      product={productItem}
-                    />
-                  ))
-                : null}
+              ) : productList && productList.length > 0 ? (
+                productList.map((productItem) => (
+                  <ShoppingProductTile
+                    key={productItem.id}
+                    handleGetProductDetails={handleGetProductDetails}
+                    product={productItem}
+                  />
+                ))
+              ) : null}
             </div>
           </div>
         </div>
@@ -473,4 +470,4 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
   );
 }
 
-export default ShoppingListing;
+export default React.memo(ShoppingListing);
