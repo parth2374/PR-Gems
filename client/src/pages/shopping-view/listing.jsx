@@ -20,7 +20,7 @@ import {
   fetchAllFilteredProducts,
   fetchProductDetails,
 } from "@/store/shop/products-slice";
-import { ArrowUpDownIcon } from "lucide-react";
+import { ArrowUp, ArrowUpDownIcon } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -67,6 +67,21 @@ function ShoppingListing() {
     (state) => state.shopProducts
   );
 
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Show button after scrolling 200px
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 200);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   // const [percent, setPercent] = useState(0);
   // const [showLoader, setShowLoader] = useState(false);
 
@@ -90,7 +105,7 @@ function ShoppingListing() {
   // }, [isLoading]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 10;
+  const ITEMS_PER_PAGE = 16;
 
   const CACHE_DURATION = 1000 * 60 * 60 * 6;
 
@@ -418,7 +433,7 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
                 </DropdownMenu>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
               {isLoading ? (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 z-10">
                   <div className="w-24 h-24">
@@ -444,7 +459,10 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
       {pagination && !isLoading && (
         <div className="flex justify-center items-center gap-4 mt-6">
           <button
-            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+            onClick={() => {
+              setCurrentPage(p => Math.max(1, p - 1));
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
             disabled={currentPage === 1}
             className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50"
           >
@@ -454,7 +472,10 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
           <span>Page {currentPage} of {pagination.pages}</span>
 
           <button
-            onClick={() => setCurrentPage(p => Math.min(pagination.pages, p + 1))}
+            onClick={() => {
+              setCurrentPage(p => Math.min(pagination.pages, p + 1));
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
             disabled={currentPage === pagination.pages}
             className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50"
           >
@@ -467,6 +488,16 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
       <Newsletter />
       <Service />
       <Footer />
+
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="scroll-btn"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="w-5 h-5" />
+        </button>
+      )}
     </div>
   );
 }

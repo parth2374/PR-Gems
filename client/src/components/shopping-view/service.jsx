@@ -2,7 +2,7 @@ import React from "react";
 
 const Service = () => {
   return (
-    <section className="pb-12 pt-3 md:pb-12 md:pt-3 lg:pb-7 lg:pt-3">
+    <section className="pb-12 w-full pt-3 md:pb-12 md:pt-3 lg:pb-7 lg:pt-3">
       <div className="container mx-auto">
         {/* <div className="-mx-4 flex flex-wrap"> */}
         <div className="ms-4 md:-ms-4 lg:ms-4 xl:-ms-4 flex flex-nowrap overflow-x-auto md:flex-nowrap [&::-webkit-scrollbar]:hidden scrollbar-none xl:flex-nowrap">

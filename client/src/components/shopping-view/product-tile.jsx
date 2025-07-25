@@ -98,7 +98,7 @@ function ShoppingProductTile({
               <p>Weight: {product?.weight}</p>
               <p className="whitespace-nowrap overflow-hidden text-ellipsis">Origin: {originOptionsMap[product?.origin]}</p>
               <div className="flex justify-center items-center">
-                <button className="button-30 mt-3" role="button">Contact<div className="block md:hidden lg:block ml-2"> Us For Price</div></button>
+                <button className="button-30 mt-3 whitespace-nowrap overflow-hidden" role="button">Contact<div className="block md:hidden lg:hidden xl:block ml-2"> Us For Price</div></button>
               </div>
             </div>
             {/* <div className="buy flex justify-center items-center" onClick={handleBuy}><ShoppingCart /></div> */}

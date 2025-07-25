@@ -7,6 +7,9 @@ import Newsletter from "@/components/shopping-view/newsletter";
 import Service from "@/components/shopping-view/service";
 import { Footer } from "@/components/shopping-view/footer";
 import RelatedProducts from "@/components/shopping-view/relatedProducts";
+import Lottie from "lottie-react";
+import loadingAnim from "@/assets/Loading sand clock.json";
+import { Download } from "lucide-react";
 
 const ProductPreviews = ({ previews }) => {
 	// Normalize previews into an array of objects with type/src
@@ -63,7 +66,6 @@ const ProductPreviews = ({ previews }) => {
 					<video
 						muted
 						src={preview.src}
-						// poster={preview.thumbnail}
 						className="max-h-[150px] w-auto object-cover cursor-pointer"
 					/>
 				</li>
@@ -107,42 +109,20 @@ const SizeVariant = () => {
 
 	return (
 		<div className="mb-6">
-			{/* <h5 className="text-sm font-medium mb-2">
-				Size:{" "}
-				<span className="opacity-50">
-					{selectedSize &&
-						product.sizeVariants.find((size) => size.label === selectedSize)
-							?.label}
-				</span>
-			</h5> */}
 			<div className="flex gap-2 mb-2">
-				{/* {product.sizeVariants.map((size, index) => (
-					<React.Fragment key={size.label}>
-						<input
-							type="radio"
-							className="sr-only"
-							autoComplete="off"
-							checked={selectedSize === size.value}
-							onChange={() => handleSizeChange(size.value)}
-						/> */}
 				<label
 					className={`cursor-pointer flex flex-col overflow-hidden text-start border-1 border-black dark:border-[#0b1727]
 								"outline-1 outline-blue-600 dark:outline-blue-600"
 							hover:outline-blue-600 px-6 py-4`}
-				// onClick={() => handleSizeChange(size.value)}
 				>
 					<span className="opacity-75 mb-2">Being an exclusive and exceptional gemstone, the price of this <b>stone</b> may vary. The cost depends on the quality of the gem. Connect with our gemstone experts to know the exact value.</span>
 				</label>
-				{/* </React.Fragment>
-				))} */}
 			</div>
 		</div>
 	);
 };
 
 export default function ProductDetail() {
-
-
 
 	const navigate = useNavigate();
 	const [showDropdown, setShowDropdown] = useState(false);
@@ -172,10 +152,17 @@ export default function ProductDetail() {
 
 	console.log(productDetails, "productDetails")
 
-	if (isLoading) return <div>Loading…</div>;
+	if (isLoading) {
+		return (
+			<div className="flex flex-col items-center justify-center h-[300px]">
+				<div className="w-[120px] mb-4">
+					<Lottie animationData={loadingAnim} loop autoplay />
+				</div>
+				<p className="text-lg font-medium text-gray-600 dark:text-white">Loading…</p>
+			</div>
+		);
+	}
 	if (!productDetails) return <div>Product not found</div>;
-
-
 
 	const toggleDropdown = () => {
 		setShowDropdown(prev => !prev);
@@ -190,17 +177,13 @@ export default function ProductDetail() {
 		navigate(`/shop/product/${getCurrentProductId}`);
 	}
 
-		const getDownloadUrl = (url, fileName = "download") => {
-  if (!url || typeof url !== "string") return null;
-  const parts = url.split("/upload/");
-  return parts.length === 2
-    ? `${parts[0]}/upload/fl_attachment:${fileName}/${parts[1]}`
-    : url;
-};
-
-	// 	const firstPreviewUrl = productDetails?.video
-
-	// 	const downloadUrl = getDownloadUrl(firstPreviewUrl);
+	const getDownloadUrl = (url, fileName = "download") => {
+		if (!url || typeof url !== "string") return null;
+		const parts = url.split("/upload/");
+		return parts.length === 2
+			? `${parts[0]}/upload/fl_attachment:${fileName}/${parts[1]}`
+			: url;
+	};
 
 	return (
 		<section className="py-4 md:py-10 bg-white dark:bg-[#0b1727] text-zinc-900 dark:text-white relative overflow-hidden z-10">
@@ -210,7 +193,7 @@ export default function ProductDetail() {
 						<ProductPreviews previews={productDetails} />
 					</div>
 					<div className="col-span-2 lg:col-span-1">
-						<div className="mb-6 lg:mb-12">
+						<div className="mb-6 lg:mb-8">
 							<h1 className="text-2xl leading-none md:text-4xl font-medium mb-4 archivo">
 								{productDetails.title}
 							</h1>
@@ -238,99 +221,116 @@ export default function ProductDetail() {
 							</div>
 						</div>
 
+						{/* <div className="w-full">
+							<button className="button-50 flex w-full justify-center items-center">
+								<a
+									href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.video)}&name=video.mp4`}
+									className="flex gap-2 justify-center items-center text-white"
+								>
+									<Download /> Download Video
+								</a>
+							</button>
+							<button className="button-50 flex w-full justify-center items-center">
+								<a
+									href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.image)}&name=certificate.jpg`}
+									className="flex gap-2 justify-center items-center text-white"
+								>
+									<Download /> Download Certificate
+								</a>
+							</button>
+							<a
+								href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.frontSide)}&name=front.jpg`}
+								className="block px-4 py-2 hover:bg-gray-100 text-black"
+							>
+								Front Side
+							</a>
+							<a
+								href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.backSide)}&name=back.jpg`}
+								className="block px-4 py-2 hover:bg-gray-100 text-black"
+							>
+								Back Side
+							</a>
+						</div> */}
+						<div className="relative inline-block w-full text-center mb-6 z-50">
+							<div>
+								<button
+									onClick={toggleDropdown}
+									type="button"
+									className="button-50  flex justify-center items-center gap-2 w-full  bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold rounded-lg shadow-md hover:from-purple-700 hover:to-blue-600 transition"
+								>
+									<Download />
+									Download
+								</button>
+							</div>
+
+							{showDropdown && (
+								<div className="absolute mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg animate-fade-in">
+									<ul className="py-1 text-sm text-gray-800">
+										<li>
+											<a
+												href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.video)}&name=video.mp4`}
+												className="flex items-center px-4 py-3 hover:bg-purple-100 transition rounded-t-lg"
+												onClick={closeDropdown}
+											>
+												<p className="text-center w-full">🎥 Download Video</p>
+											</a>
+										</li>
+										<li>
+											<a
+												href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.image)}&name=certificate.jpg`}
+												className="flex items-center px-4 py-3 hover:bg-purple-100 transition"
+												onClick={closeDropdown}
+											>
+												<p className="text-center w-full">📄 Download Certificate</p>
+											</a>
+										</li>
+										<li>
+											<a
+												href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.frontSide)}&name=front.jpg`}
+												className="flex items-center px-4 py-3 hover:bg-purple-100 transition"
+												onClick={closeDropdown}
+											>
+												<p className="text-center w-full">🖼️ Front Side</p>
+											</a>
+										</li>
+										<li>
+											<a
+												href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.backSide)}&name=back.jpg`}
+												className="flex items-center px-4 py-3 hover:bg-purple-100 transition rounded-b-lg"
+												onClick={closeDropdown}
+											>
+												<p className="text-center w-full">🖼️ Back Side</p>
+											</a>
+										</li>
+									</ul>
+								</div>
+							)}
+						</div>
+
 						<form action="#!">
 							<div className="mb-6">
 								<SizeVariant />
 							</div>
 
 							<div className="flex flex-wrap gap-3 items-center my-7">
-								<button class="button-86" role="button">Contact Us For Pricing</button>
-								<button className="hover:bg-blue-600 rounded hover:bg-opacity-10 text-blue-600 px-3 py-2 text-lg font-bold">
-
-								</button>
-								<button className="hover:bg-blue-600 rounded hover:bg-opacity-10 text-blue-600 px-3 py-2 text-lg font-bold">
-
+								<button
+									onClick={() => {
+										const phoneNumber = "919983886963"; // replace with your number
+										const message = `Hi, I'm interested in the product:\n\nName: ${productDetails.title}\nSKU: ${productDetails.sku}\nCertificate: ${productDetails?.certificate}\nOrigin: ${productDetails?.origin}\nShape: ${productDetails?.shape}\nWeight: ${productDetails.weight}`;
+										const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+										window.open(url, "_blank");
+									}}
+									class="button-86"
+									role="button"
+								>
+									Contact Us For Pricing
 								</button>
 							</div>
 
 							<div className="w-full lg:mr-56 xl:mr-80">
 								<p className="text-2xl archivo text-center font-bold">Trusted by Leading Gemstone Buyers Worldwide</p>
 								<p className="text-2xl mt-2 text-center text-yellow-400">★★★★★</p>
-								{/* {downloadUrl && ( */}
-								{/* <div className="absolute top-4 right-4 z-50">
-									<div className="relative">
-										<button
-											onClick={toggleDropdown}
-											className="bg-blue-600 text-white px-3 py-1 rounded shadow hover:bg-blue-700 transition"
-										>
-											Download
-										</button>
-
-										{showDropdown && (
-											<div className="absolute bg-white border rounded shadow mt-1 right-0 z-50">
-												<a
-													href={getDownloadUrl(productDetails?.image)}
-													download
-													onClick={closeDropdown}
-													className="block px-4 py-2 hover:bg-gray-100 text-black"
-												>
-													Certificate
-												</a>
-												<a
-													href={getDownloadUrl(productDetails?.video)}
-													download
-													onClick={closeDropdown}
-													className="block px-4 py-2 hover:bg-gray-100 text-black"
-												>
-													Video
-												</a>
-												<a
-													href={getDownloadUrl(productDetails?.frontSide)}
-													download
-													onClick={closeDropdown}
-													className="block px-4 py-2 hover:bg-gray-100 text-black"
-												>
-													Front Side
-												</a>
-												<a
-													href={getDownloadUrl(productDetails?.backSide)}
-													download
-													onClick={closeDropdown}
-													className="block px-4 py-2 hover:bg-gray-100 text-black"
-												>
-													Back Side
-												</a>
-											</div>
-										)}
-									</div>
-								</div> */}
-								<a
-  href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.video)}&name=video.mp4`}
-  className="block px-4 py-2 hover:bg-gray-100 text-black"
->
-  Video
-</a>
-								<a
-  href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.image)}&name=certificate.jpg`}
-  className="block px-4 py-2 hover:bg-gray-100 text-black"
->
-  Certificate
-</a>
-								<a
-  href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.frontSide)}&name=front.jpg`}
-  className="block px-4 py-2 hover:bg-gray-100 text-black"
->
-  Front Side
-</a>
-								<a
-  href={`${import.meta.env.VITE_API_URL}/api/download?url=${encodeURIComponent(productDetails?.backSide)}&name=back.jpg`}
-  className="block px-4 py-2 hover:bg-gray-100 text-black"
->
-  Back Side
-</a>
-								{/* // )} */}
 								<p className="font-medium mt-2 archivo text-center">BASED ON 200+ GOOGLE REVIEWS</p>
-
 							</div>
 						</form>
 					</div>
