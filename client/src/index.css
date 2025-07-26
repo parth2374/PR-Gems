@@ -8,7 +8,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* @custom-variant dark (&:is(.dark *)); */
 
 .button-54 {
   font-family: "Open Sans", sans-serif;

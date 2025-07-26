@@ -4,6 +4,9 @@ import axios from "axios";
 const initialState = {
   isLoading: false,
   productList: [],
+  pagination: { totalCount: 0, perPage: 15, currentPage: 1, totalPages: 0 },
+  status: "idle",
+  error: null,
 };
 
 export const addNewProduct = createAsyncThunk(
@@ -23,16 +26,26 @@ export const addNewProduct = createAsyncThunk(
   }
 );
 
-export const fetchAllProducts = createAsyncThunk(
-  "/products/fetchAllProducts",
-  async () => {
-    const result = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/admin/products/get`
-    );
+// export const fetchAllProducts = createAsyncThunk(
+//   "/products/fetchAllProducts",
+//   async () => {
+//     const result = await axios.get(
+//       `${import.meta.env.VITE_API_URL}/api/admin/products/get`
+//     );
 
-    return result?.data;
+//     return result?.data;
+//   }
+// );
+export const fetchAllProducts = createAsyncThunk(
+  "admin/products/fetchAll",
+  async ({ page = 1, limit = 15 } = {}) => {
+    const result = await axios.get(
+      `${import.meta.env.VITE_API_URL}/api/admin/products/get`,
+      { params: { page, limit } }
+    )
+    return result.data
   }
-);
+)
 
 export const editProduct = createAsyncThunk(
   "/products/editProduct",
@@ -85,10 +98,12 @@ const AdminProductsSlice = createSlice({
       .addCase(fetchAllProducts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.productList = action.payload?.data;
+        state.pagination = action.payload?.pagination;
       })
       .addCase(fetchAllProducts.rejected, (state, action) => {
         state.isLoading = false;
         state.productList = [];
+        state.error = action.error.message;
       });
   },
 });

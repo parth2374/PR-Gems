@@ -20,7 +20,7 @@ import {
   fetchAllFilteredProducts,
   fetchProductDetails,
 } from "@/store/shop/products-slice";
-import { ArrowUp, ArrowUpDownIcon } from "lucide-react";
+import { ArrowUp, ArrowUpDownIcon, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -436,7 +436,7 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
               {isLoading ? (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 z-10">
-                  <div className="w-24 h-24 bg-white">
+                  <div className="w-24 h-24 bg-white rounded-lg">
                     <Lottie animationData={loadingAnim} loop />
                   </div>
                   <div className="mt-2 text-lg p-2 rounded-xl font-medium bg-white">Loading products...</div>
@@ -466,10 +466,10 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
             disabled={currentPage === 1}
             className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50"
           >
-            Prev
+            <ChevronsLeft />
           </button>
 
-          <span>Page {currentPage} of {pagination.pages}</span>
+          <span className="italic text-gray-800">Page {currentPage} of {pagination.pages}</span>
 
           <button
             onClick={() => {
@@ -479,7 +479,7 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
             disabled={currentPage === pagination.pages}
             className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50"
           >
-            Next
+            <ChevronsRight />
           </button>
         </div>
       )}

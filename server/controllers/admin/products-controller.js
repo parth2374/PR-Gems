@@ -1,4 +1,7 @@
-const { imageUploadUtil, videoUploadUtil } = require("../../helpers/cloudinary");
+const {
+  imageUploadUtil,
+  videoUploadUtil,
+} = require("../../helpers/cloudinary");
 const Product = require("../../models/Product");
 
 const handleImageUpload = async (req, res) => {
@@ -91,7 +94,7 @@ const addProduct = async (req, res) => {
       shape,
       video,
       frontSide,
-      backSide
+      backSide,
     } = req.body;
 
     // console.log(averageReview, "averageReview");
@@ -107,7 +110,7 @@ const addProduct = async (req, res) => {
       shape,
       video,
       frontSide,
-      backSide
+      backSide,
     });
 
     await newlyCreatedProduct.save();
@@ -124,18 +127,50 @@ const addProduct = async (req, res) => {
   }
 };
 
+// const fetchAllProducts = async (req, res) => {
+//   try {
+//     const listOfProducts = await Product.find({});
+//     res.status(200).json({
+//       success: true,
+//       data: listOfProducts,
+//     });
+//   } catch (e) {
+//     console.log(e);
+//     res.status(500).json({
+//       success: false,
+//       message: "Error occured",
+//     });
+//   }
+// };
 const fetchAllProducts = async (req, res) => {
   try {
-    const listOfProducts = await Product.find({});
+    const { page = 1, limit = 15 } = req.query;
+    const pageNum = Math.max(1, parseInt(page, 10));
+    const perPage = Math.max(1, parseInt(limit, 10));
+
+    const [totalCount, products] = await Promise.all([
+      Product.countDocuments({}),
+      Product.find({})
+        .skip((pageNum - 1) * perPage)
+        .limit(perPage)
+        .sort({ createdAt: -1 })
+    ]);
+
     res.status(200).json({
       success: true,
-      data: listOfProducts,
+      data: products,
+      pagination: {
+        totalCount,
+        perPage,
+        currentPage: pageNum,
+        totalPages: Math.ceil(totalCount / perPage),
+      },
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
     res.status(500).json({
       success: false,
-      message: "Error occured",
+      message: "Error occurred",
     });
   }
 };
@@ -155,7 +190,7 @@ const editProduct = async (req, res) => {
       shape,
       video,
       frontSide,
-      backSide
+      backSide,
     } = req.body;
 
     let findProduct = await Product.findById(id);
@@ -242,5 +277,5 @@ module.exports = {
   deleteProduct,
   handleFrontSideImageUpload,
   handleBackSideImageUpload,
-  toggleProductListing
+  toggleProductListing,
 };
