@@ -7,7 +7,7 @@ function AdminLayout() {
   const [openSidebar, setOpenSidebar] = useState(false);
 
   return (
-    <div className="flex h-screen w-full /* overflow-hidden */">
+    <div className="flex h-auto w-full min-h-screen /* overflow-hidden */">
       {/* Sticky Sidebar */}
       <div className="h-full">
         <AdminSidebar open={openSidebar} setOpen={setOpenSidebar} />

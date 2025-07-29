@@ -1,9 +1,10 @@
 import ProductImageUpload from "@/components/admin-view/image-upload";
 import { Button } from "@/components/ui/button";
 import { addFeatureImage, getFeatureImages } from "@/store/common-slice";
-import { Upload } from "lucide-react";
+import { Album, ArrowRight, Upload } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function AdminDashboard() {
   // const [imageFile, setImageFile] = useState(null);
@@ -31,7 +32,7 @@ function AdminDashboard() {
   // console.log(featureImageList, "featureImageList");
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       {/* <ProductImageUpload
         imageFile={imageFile}
         setImageFile={setImageFile}
@@ -60,7 +61,12 @@ function AdminDashboard() {
             ))
           : null}
       </div> */}
-      hello world
+      <img
+        src="/welcome.png"
+        alt="Welcome"
+        className="h-50 w-80"
+      />
+      <Link to={'/admin/products'}><button className="button-71 flex"><Album /> Go to Products <ArrowRight /></button></Link>
     </div>
   );
 }

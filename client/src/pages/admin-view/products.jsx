@@ -15,10 +15,10 @@ import {
   fetchAllProducts,
 } from "@/store/admin/products-slice";
 import Lottie from "lottie-react";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-import { ChevronsLeftIcon, ChevronsRight } from "lucide-react";
+import { ChevronsLeftIcon, ChevronsRight, ChevronUp } from "lucide-react";
 
 const initialFormData = {
   video: null,
@@ -51,6 +51,9 @@ function AdminProducts() {
   const [uploadedBackSideUrl, setUploadedBackSideUrl] = useState("");
   const [backSideLoadingState, setBackSideLoadingState] = useState(false);
   const [currentEditedId, setCurrentEditedId] = useState(null);
+
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const scrollRef = useRef(null);
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -93,6 +96,19 @@ function AdminProducts() {
       );
     });
   }, [productList, searchTerm]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollToTop(window.scrollY > 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
 
   console.log(productList, uploadedImageUrl, 'productList')
 
@@ -174,7 +190,8 @@ function AdminProducts() {
   console.log(formData, "formData")
 
   return (
-    <Fragment>
+    // <div ref={scrollRef} className="relative">
+    <div>
 
 
       <div className="mb-15 w-full flex flex-col md:flex-row lg:flex-row gap-5 justify-between">
@@ -190,13 +207,13 @@ function AdminProducts() {
           <label for="simple-search" class="sr-only">Search</label>
           <div class="relative w-full">
             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-              <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+              <svg class="w-5 h-5 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2" />
               </svg>
             </div>
-            <input type="text" onChange={(e) => setSearchTerm(e.target.value)} id="simple-search" class="bg-white border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-3 shadow-md dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search products..." required />
+            <input type="text" onChange={(e) => setSearchTerm(e.target.value)} id="simple-search" class="bg-white border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-3 shadow-md" placeholder="Search products..." required />
           </div>
-          <button type="submit" class="p-[0.8rem] shadow-md ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <button type="submit" class="p-[0.8rem] shadow-md ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
             </svg>
@@ -225,23 +242,25 @@ function AdminProducts() {
           : null}
 			</div> */}
       {/* grid: map over filteredProducts, which is productList when searchTerm is empty */}
-      <div className="grid gap-2 gap-y-20 mb-5 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 ms-4">
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map((productItem) => (
-            <AdminProductTile
-              key={productItem.id}
-              setFormData={setFormData}
-              setOpenCreateProductsDialog={setOpenCreateProductsDialog}
-              setCurrentEditedId={setCurrentEditedId}
-              product={productItem}
-              handleDelete={handleDelete}
-            />
-          ))
-        ) : (
-          <p className="col-span-full text-center text-gray-500">
-            No products found.
-          </p>
-        )}
+      <div className="flex justify-center items-center">
+        <div className="grid gap-10 gap-y-20 mb-5 md:grid-cols-2 items-center lg:grid-cols-2 xl:grid-cols-3 ms-2 justify-center">
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((productItem) => (
+              <AdminProductTile
+                key={productItem.id}
+                setFormData={setFormData}
+                setOpenCreateProductsDialog={setOpenCreateProductsDialog}
+                setCurrentEditedId={setCurrentEditedId}
+                product={productItem}
+                handleDelete={handleDelete}
+              />
+            ))
+          ) : (
+            <p className="col-span-full text-center text-gray-500">
+              No products found.
+            </p>
+          )}
+        </div>
       </div>
 
       {/* ▶ NEW: Loading Overlay */}
@@ -259,7 +278,10 @@ function AdminProducts() {
       {/* ▶ NEW: Pagination Controls */}
       <div className="flex justify-center items-center gap-4 mb-6 mt-20">
         <button
-          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+          onClick={() => {
+            setCurrentPage((p) => Math.max(1, p - 1));
+            scrollToTop();
+          }}
           disabled={pagination.currentPage <= 1}
           className="px-3 py-1 rounded border"
         >
@@ -269,7 +291,10 @@ function AdminProducts() {
           Page {pagination.currentPage} of {pagination.totalPages}
         </span>
         <button
-          onClick={() => setCurrentPage((p) => Math.min(pagination.totalPages, p + 1))}
+          onClick={() => {
+            setCurrentPage((p) => Math.min(pagination.totalPages, p + 1));
+            scrollToTop();
+          }}
           disabled={pagination.currentPage >= pagination.totalPages}
           className="px-3 py-1 rounded border"
         >
@@ -339,7 +364,28 @@ function AdminProducts() {
           </div>
         </SheetContent>
       </Sheet>
-    </Fragment>
+
+      {showScrollToTop && (
+  <button
+    onClick={scrollToTop}
+    className="scroll-btn"
+    title="Scroll to top"
+  >
+    <ChevronUp className="w-5 h-5" />
+  </button>
+)}
+    </div>
+//     {/* {showScrollToTop && (
+//   <div className="fixed bottom-6 right-6 z-50">
+//     <button
+//       onClick={scrollToTop}
+//       className="p-3 rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700 transition-all"
+//     >
+//       ↑
+//     </button>
+//   </div>
+// )} */}
+    // </div>
   );
 }
 

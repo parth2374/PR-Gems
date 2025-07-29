@@ -141,7 +141,7 @@ function ProductFilter({ filters, handleFilter, handleRangeFilter}) {
           } role="button">Apply</button>
         </div>
       </div>
-      <div className="pe-4 ps-4 pt-4"><hr className="w-full border-t border-gray-300 dark:border-gray-600" /></div>
+      <div className="pe-4 ps-4 pt-4"><hr className="w-full border-t border-gray-300" /></div>
       <h3 className="text-base font-bold mt-5 ms-4 me-4">Weight Range</h3>
       <div className="flex flex-col ms-4 me-4">
         <div className="flex mt-2 gap-2">
@@ -182,7 +182,7 @@ function ProductFilter({ filters, handleFilter, handleRangeFilter}) {
           } role="button">Apply</button>
         </div>
       </div>
-      <div className="pe-4 ps-4 pt-4"><hr className="w-full border-t border-gray-300 dark:border-gray-600" /></div>
+      <div className="pe-4 ps-4 pt-4"><hr className="w-full border-t border-gray-300" /></div>
       <h3 className="text-base font-bold pe-4 ps-4 mt-4">Sku Range</h3>
       <div className="flex flex-col ps-4 pe-4 gap-2">
         <div className="flex gap-2 mt-2">

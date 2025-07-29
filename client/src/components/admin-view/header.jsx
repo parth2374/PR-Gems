@@ -12,7 +12,7 @@ function AdminHeader({ setOpen }) {
   }
 
 	return (
-		<header className=" w-full flex items-center justify-between px-4 py-3 bg-background border-b">
+		<header className="w-full flex items-center justify-between px-4 py-3 bg-background border-b">
 			<Button variant='ghost' onClick={() => setOpen(true)} className="lg:hidden sm:block">
 				<AlignJustify />
 				<span className="sr-only">Toggle Menu</span>

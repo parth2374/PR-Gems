@@ -331,7 +331,8 @@
   border-radius: 56px;
   color: #fff;
   cursor: pointer;
-  display: inline-block;
+  display: flex;
+  gap: 0.5rem;
   font-family: system-ui,-apple-system,system-ui,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",sans-serif;
   font-size: 18px;
   font-weight: 600;
@@ -344,6 +345,7 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  margin-top: 2rem;
 }
 
 .button-71:before {
