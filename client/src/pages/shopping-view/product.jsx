@@ -111,8 +111,8 @@ const SizeVariant = () => {
 		<div className="mb-6">
 			<div className="flex gap-2 mb-2">
 				<label
-					className={`cursor-pointer flex flex-col overflow-hidden text-start border-1 border-black dark:border-[#0b1727]
-								"outline-1 outline-blue-600 dark:outline-blue-600"
+					className={`cursor-pointer flex flex-col overflow-hidden text-start border-1 border-black
+								"outline-1 outline-blue-600"
 							hover:outline-blue-600 px-6 py-4`}
 				>
 					<span className="opacity-75 mb-2">Being an exclusive and exceptional gemstone, the price of this <b>stone</b> may vary. The cost depends on the quality of the gem. Connect with our gemstone experts to know the exact value.</span>
@@ -158,7 +158,7 @@ export default function ProductDetail() {
 				<div className="w-[120px] mb-4">
 					<Lottie animationData={loadingAnim} loop autoplay />
 				</div>
-				<p className="text-lg font-medium text-gray-600 dark:text-white">Loading…</p>
+				<p className="text-lg font-medium text-gray-600">Loading…</p>
 			</div>
 		);
 	}
@@ -186,7 +186,7 @@ export default function ProductDetail() {
 	};
 
 	return (
-		<section className="py-4 md:py-10 bg-white dark:bg-[#0b1727] text-zinc-900 dark:text-white relative overflow-hidden z-10">
+		<section className="py-4 md:py-10 bg-white text-zinc-900 relative overflow-hidden z-10">
 			<div className="container px-4 mx-auto">
 				<div className="grid grid-cols-2 gap-6">
 					<div className="col-span-2 lg:col-span-1">
@@ -339,9 +339,9 @@ export default function ProductDetail() {
 
 			<div className="mt-16">
 				<div className="flex items-center justify-center my-10 gap-4">
-					<hr className="hidden md:block lg:block w-1/5 border-t border-gray-300 dark:border-gray-600" />
-					<h1 class="mb-4 ms-7 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">Related <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Products</span></h1>
-					<hr className="hidden md:block lg:block w-1/5 border-t border-gray-300 dark:border-gray-600" />
+					<hr className="hidden md:block lg:block w-1/5 border-t border-gray-300" />
+					<h1 class="mb-4 ms-7 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl">Related <span class="underline underline-offset-3 decoration-8 decoration-blue-400">Products</span></h1>
+					<hr className="hidden md:block lg:block w-1/5 border-t border-gray-300" />
 				</div>
 
 				<RelatedProducts origin={productDetails.origin} handleGetProductDetails={handleGetProductDetails} />

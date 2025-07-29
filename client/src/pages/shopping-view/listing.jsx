@@ -236,7 +236,7 @@ function ShoppingListing() {
   // }
 
   useEffect(() => {
-    setSort("price-lowtohigh");
+    setSort("weight-lowtohigh");
     setFilters(JSON.parse(sessionStorage.getItem("filters")) || {});
   }, [originSearchParam]);
 

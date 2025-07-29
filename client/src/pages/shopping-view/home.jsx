@@ -387,7 +387,7 @@ function ShoppingHome() {
 				</div>
 			</div>
 		</section> */}
-      <section className="ezy__epcategory3 light py-7 md:py-7 bg-white dark:bg-[#0b1727] text-zinc-900 dark:text-white relative overflow-visible z-10">
+      <section className="ezy__epcategory3 light py-7 md:py-7 bg-white text-zinc-900 relative overflow-visible z-10">
         <div className="container mx-auto">
           <div className="flex justify-start items-center text-center md:text-start">
             <h2 className="leading-none text-xl md:text-[25px] font-bold mb-2 ml-3 oswald">
@@ -425,13 +425,13 @@ function ShoppingHome() {
         <div className="container mx-auto px-4">
           {/* <h2 className="text-[1.5rem] md:text-[2rem] font-bold mb-7 text-center oswald">Featured Products</h2> */}
           <div className="flex items-center justify-center my-10 gap-4">
-   <hr className="w-1/5 border-t border-gray-300 dark:border-gray-600" />
-  <h1 className="text-3xl font-extrabold text-center text-gray-900 dark:text-white md:text-3xl lg:text-4xl whitespace-nowrap">
+   <hr className="w-1/5 border-t border-gray-300" />
+  <h1 className="text-3xl font-extrabold text-center text-gray-900 md:text-3xl lg:text-4xl whitespace-nowrap">
     <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
       Featured
     </span> Products
   </h1>
-   <hr className="w-1/5 border-t border-gray-300 dark:border-gray-600" />
+   <hr className="w-1/5 border-t border-gray-300" />
 </div>
 
           <div /* className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"*/>
@@ -460,9 +460,9 @@ function ShoppingHome() {
       <section className="py-0">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center my-10 gap-4">
-   <hr className="hidden md:block lg:block w-1/5 border-t border-gray-300 dark:border-gray-600" />
-  <h1 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">Popular <mark class="px-2 text-white bg-blue-600 rounded-sm dark:bg-blue-500">Products</mark></h1>
-   <hr className="hidden md:block lg:block w-1/5 border-t border-gray-300 dark:border-gray-600" />
+   <hr className="hidden md:block lg:block w-1/5 border-t border-gray-300" />
+  <h1 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl">Popular <mark class="px-2 text-white bg-blue-600 rounded-sm">Products</mark></h1>
+   <hr className="hidden md:block lg:block w-1/5 border-t border-gray-300" />
 </div>
           <div /* className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"*/>
             {/* {productList && productList.length > 0
