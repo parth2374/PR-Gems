@@ -11,5 +11,5 @@ jobs:
     steps:
       - name: Ping the /health endpoint
         run: |
-          echo "Pinging $SERVER_URL/health"
-          curl --fail "${{ secrets.SERVER_URL }}/health" -o /dev/null
+          echo "Pinging https://prgems-server.onrender.com/health"
+          curl --fail "https://prgems-server.onrender.com/health" -o /dev/null
