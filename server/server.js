@@ -21,12 +21,15 @@ const PORT = process.env.PORT || 5000;
 mongoose.set("autoIndex", true);
 
 mongoose
-  .connect(process.env.MONGO_URL, {
-    keepAlive: true,
-    keepAliveInitialDelay: 300000, // 5 minutes
-  })
+  .connect(process.env.MONGO_URL)
   .then(async () => {
     console.log("MongoDB connected")
+
+    setInterval(() => {
+      mongoose.connection.db.admin().ping()
+        .then(() => console.log("Mongo ping OK"))
+        .catch((e) => console.warn("Mongo ping error", e));
+    }, 4 * 60 * 1000);
 
     try {
         await Product.syncIndexes();
@@ -76,6 +79,11 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
+
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 app.use("/api/auth", authRouter);
 app.use("/api/admin/products", adminProductsRouter);
 

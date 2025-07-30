@@ -1,0 +1,15 @@
+name: Ping Production Server
+
+# Run every 5 minutes
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  keep-awake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping the /health endpoint
+        run: |
+          echo "Pinging $SERVER_URL/health"
+          curl --fail "${{ secrets.SERVER_URL }}/health" -o /dev/null
