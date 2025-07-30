@@ -64,7 +64,7 @@ function App() {
           <Route path="features" element={<AdminFeatures />} />
         </Route>
         <Route path='/shop' element={<ShoppingLayout />}>
-          <Route path="home" element={<ShoppingHome />} />
+          {/* <Route path="home" element={<ShoppingHome />} /> */}
           <Route path="listing" element={<ShoppingListing />} />
           <Route path="search" element={<ShoppingSearch />} />
           <Route path="checkout" element={<ShoppingCheckout />} />

@@ -73,7 +73,8 @@ const getFilteredProducts = async (req, res) => {
      Product.find({ ...filters, isListed: true })
        .sort(sort)
        .skip(skip)
-       .limit(limit),
+       .limit(limit)
+       .lean(),
      Product.countDocuments({ ...filters, isListed: true })
    ]);
 

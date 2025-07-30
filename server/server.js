@@ -13,6 +13,8 @@ const downloadRoute = require("./routes/download");
 
 const compression = require("compression");
 
+mongoose.set("autoIndex", true);
+
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB connected"))

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Lottie from "lottie-react";
 import loadingAnim from './../../assets/Loading sand clock.json'
+import productAnim from './../../assets/Empty box.json'
 import { sortOptions } from "@/config";
 // import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import {
@@ -168,29 +169,29 @@ function ShoppingListing() {
   //   sessionStorage.setItem("filters", JSON.stringify(cpyFilters));
   // }
   function handleFilter(category, ids, clearAll = false) {
-  setFilters((prev) => {
-    const nextFilters = { ...prev };
+    setFilters((prev) => {
+      const nextFilters = { ...prev };
 
-    let newSet;
-    if (Array.isArray(ids)) {
-      // If we get an array, *always* select exactly those IDs
-      newSet = new Set(ids);
-    } else {
-      // Single ID toggle or clearAll
-      newSet = new Set(nextFilters[category] || []);
-      if (clearAll) {
-        newSet.clear();
+      let newSet;
+      if (Array.isArray(ids)) {
+        // If we get an array, *always* select exactly those IDs
+        newSet = new Set(ids);
       } else {
-        if (newSet.has(ids)) newSet.delete(ids);
-        else newSet.add(ids);
+        // Single ID toggle or clearAll
+        newSet = new Set(nextFilters[category] || []);
+        if (clearAll) {
+          newSet.clear();
+        } else {
+          if (newSet.has(ids)) newSet.delete(ids);
+          else newSet.add(ids);
+        }
       }
-    }
 
-    nextFilters[category] = Array.from(newSet);
-    sessionStorage.setItem("filters", JSON.stringify(nextFilters));
-    return nextFilters;
-  });
-}
+      nextFilters[category] = Array.from(newSet);
+      sessionStorage.setItem("filters", JSON.stringify(nextFilters));
+      return nextFilters;
+    });
+  }
 
   function handleGetProductDetails(getCurrentProductId) {
     console.log(getCurrentProductId);
@@ -451,6 +452,15 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
                     />
                   ))
                 : null}
+              {productList?.length === 0 && (
+                <div className="col-span-full flex flex-col items-center justify-center py-20">
+                  {/* replace with your own “no products” SVG or PNG */}
+                  <div className="w-64 h-64 rounded-lg">
+                    <Lottie animationData={productAnim} loop />
+                  </div>
+                  <div className="mt-4 text-lg font-medium text-gray-700 italic">Oops! No product found</div>
+                </div>
+              )}  
             </div>
           </div>
         </div>
