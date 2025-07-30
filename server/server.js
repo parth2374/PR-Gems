@@ -13,15 +13,30 @@ const downloadRoute = require("./routes/download");
 
 const compression = require("compression");
 
+const Product = require("./models/Product")
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
 mongoose.set("autoIndex", true);
 
 mongoose
   .connect(process.env.MONGO_URL)
-  .then(() => console.log("MongoDB connected"))
-  .catch((error) => console.log(error));
+  .then(async () => {
+    console.log("MongoDB connected")
 
-const app = express();
-const PORT = process.env.PORT || 5000;
+    try {
+        await Product.syncIndexes();
+        console.log("✅ Product indexes synced");
+    } catch (err) {
+      console.error("❌ Failed to sync Product indexes:", err);
+    }
+
+    app.listen(PORT, () => {
+      console.log(`Server is now running on port ${PORT}`);
+    });
+  })
+  .catch((error) => console.log(error));
 
 app.use(compression());
 app.disable('etag');
