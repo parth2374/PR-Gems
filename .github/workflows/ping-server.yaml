@@ -1,7 +1,7 @@
 name: Ping Production Server
 
-# Run every 5 minutes
 on:
+  workflow_dispatch:      # enables the "Run workflow" button
   schedule:
     - cron: '*/5 * * * *'
 
