@@ -21,7 +21,10 @@ const PORT = process.env.PORT || 5000;
 mongoose.set("autoIndex", true);
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(process.env.MONGO_URL, {
+    keepAlive: true,
+    keepAliveInitialDelay: 300000, // 5 minutes
+  })
   .then(async () => {
     console.log("MongoDB connected")
 
