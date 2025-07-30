@@ -66,9 +66,13 @@ ProductSchema.index({ isListed: 1, certificate: 1, price: 1 });
 // Filter by shape, sort by price
 ProductSchema.index({ isListed: 1, shape: 1, price: 1 });
 
+// Filter by sku, sort by price
+ProductSchema.index({ isListed: 1, sku: 1, price: 1 });
+
 // …and likewise for weight‐sorted queries…
 ProductSchema.index({ isListed: 1, origin: 1, weight: 1 });
 ProductSchema.index({ isListed: 1, certificate: 1, weight: 1 });
 ProductSchema.index({ isListed: 1, shape: 1, weight: 1 });
+ProductSchema.index({ isListed: 1, sku: 1, weight: 1 });
 
 module.exports = mongoose.model("Product", ProductSchema);
