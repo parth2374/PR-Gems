@@ -25,11 +25,11 @@ mongoose
   .then(async () => {
     console.log("MongoDB connected")
 
-    setInterval(() => {
-      mongoose.connection.db.admin().ping()
-        .then(() => console.log("Mongo ping OK"))
-        .catch((e) => console.warn("Mongo ping error", e));
-    }, 4 * 60 * 1000);
+    // setInterval(() => {
+    //   mongoose.connection.db.admin().ping()
+    //     .then(() => console.log("Mongo ping OK"))
+    //     .catch((e) => console.warn("Mongo ping error", e));
+    // }, 4 * 60 * 1000);
 
     try {
         await Product.syncIndexes();
