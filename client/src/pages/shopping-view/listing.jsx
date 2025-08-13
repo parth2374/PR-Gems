@@ -62,6 +62,55 @@ function createSearchParamsHelper(filterParams) {
   return queryParams.join("&");
 }
 
+function parseSearchParamsToFilters(params) {
+  const filters = {};
+  for (const [key, value] of params.entries()) {
+    if (!value) continue;
+    if (key === "sortBy" || key === "page") continue;
+
+    // treat minX / maxX as range object: minPrice / maxPrice => price: {min, max}
+    const minMatch = key.match(/^min(.+)/);
+    const maxMatch = key.match(/^max(.+)/);
+    if (minMatch) {
+      const real = minMatch[1].charAt(0).toLowerCase() + minMatch[1].slice(1);
+      filters[real] = filters[real] || { min: null, max: null };
+      filters[real].min = Number(value);
+      continue;
+    }
+    if (maxMatch) {
+      const real = maxMatch[1].charAt(0).toLowerCase() + maxMatch[1].slice(1);
+      filters[real] = filters[real] || { min: null, max: null };
+      filters[real].max = Number(value);
+      continue;
+    }
+
+    // otherwise assume comma-separated list (categories, brands, etc.)
+    const arr = value.split(",").map((v) => (v === "" ? v : isNaN(v) ? v : String(v)));
+    filters[key] = arr;
+  }
+  return filters;
+}
+
+
+function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+
+// serialize filters -> URLSearchParams (used below)
+function buildSearchParamsFromState({ filters, sort, page }) {
+  const params = new URLSearchParams();
+  if (sort) params.set("sortBy", sort);
+  if (page && page > 1) params.set("page", String(page));
+
+  for (const [key, val] of Object.entries(filters || {})) {
+    if (Array.isArray(val)) {
+      if (val.length) params.set(key, val.join(","));
+    } else if (val && typeof val === "object") {
+      if (val.min != null) params.set(`min${capitalize(key)}`, String(val.min));
+      if (val.max != null) params.set(`max${capitalize(key)}`, String(val.max));
+    }
+  }
+  return params;
+}
+
 function ShoppingListing() {
   const dispatch = useDispatch();
   const { productList, productDetails, pagination, isLoading } = useSelector(
@@ -279,25 +328,47 @@ const memoizedSort = useMemo(() => sort, [JSON.stringify(sort)]);
   }, [dispatch, memoizedFilters, memoizedSort, currentPage]);
 
   // And your effect to sync query‐string:
+  // useEffect(() => {
+  //   if (filters && Object.keys(filters).length) {
+  //     const params = new URLSearchParams();
+
+  //     for (const [key, val] of Object.entries(filters)) {
+  //       if (Array.isArray(val)) {
+  //         if (val.length) params.set(key, val.join(","));
+  //       } else if (val && typeof val === "object") {
+  //         if (val.min != null) params.set(`min${capitalize(key)}`, val.min);
+  //         if (val.max != null) params.set(`max${capitalize(key)}`, val.max);
+  //       }
+  //     }
+
+  //     params.set("sortBy", sort);
+  //     setSearchParams(params);
+  //   }
+  // }, [filters, sort]);
   useEffect(() => {
-    if (filters && Object.keys(filters).length) {
-      const params = new URLSearchParams();
+    const params = new URLSearchParams(window.location.search);
+    const parsedFilters = parseSearchParamsToFilters(params);
+    const urlSort = params.get("sortBy");
+    const urlPage = params.get("page") ? Number(params.get("page")) : 1;
 
-      for (const [key, val] of Object.entries(filters)) {
-        if (Array.isArray(val)) {
-          if (val.length) params.set(key, val.join(","));
-        } else if (val && typeof val === "object") {
-          if (val.min != null) params.set(`min${capitalize(key)}`, val.min);
-          if (val.max != null) params.set(`max${capitalize(key)}`, val.max);
-        }
-      }
-
-      params.set("sortBy", sort);
-      setSearchParams(params);
+    // If there are params in URL, use them. Otherwise keep sessionStorage fallback.
+    if (Object.keys(parsedFilters).length > 0 || urlSort) {
+      setFilters(parsedFilters);
+      if (urlSort) setSort(urlSort);
+      setCurrentPage(urlPage);
+    } else {
+      // fallback to last session filters if you want
+      const s = JSON.parse(sessionStorage.getItem("filters") || "{}");
+      if (s && Object.keys(s).length) setFilters(s);
     }
-  }, [filters, sort]);
+  }, []);
 
-  function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+  useEffect(() => {
+    const params = buildSearchParamsFromState({ filters: filters || {}, sort, page: currentPage });
+    setSearchParams(params);
+    // also persist filters to sessionStorage if you still want that
+    sessionStorage.setItem("filters", JSON.stringify(filters || {}));
+  }, [filters, sort, currentPage, setSearchParams]);
 
   // useEffect(() => {
   //   if (productDetails !== null) setOpenDetailsDialog(true);
